@@ -78,3 +78,13 @@ test/                        unit, API client and widget tests
 * The demo data is synthetic and message sending is **Demo Mode** (no real WhatsApp/SMS goes out).
 * Plain HTTP is allowed in the Android manifest because the demo backend runs on a developer PC.
   Serve the API over HTTPS and remove `usesCleartextTraffic` before any real deployment.
+
+## Run on a physical Android phone (USB)
+
+```powershell
+adb reverse tcp:8000 tcp:8000
+flutter run -d <device-id> --dart-define=API_URL=http://localhost:8000
+```
+
+`adb reverse` forwards the phone's `localhost:8000` to the backend on your PC, so no Wi-Fi setup is needed.
+If the cable disconnects, re-run the `adb reverse` command. The API address can also be changed in the app's settings sheet.
