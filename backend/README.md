@@ -193,3 +193,14 @@ Tip: every `POST /analyze` after the first re-uses existing drafts instead of du
 * **Demo authentication** (header-based merchant id) – replace with real auth before any production use.
 * Anomalies are statistical outliers, not proof of fraud.
 * Single-merchant seed data; SQLite suits a demo, not heavy concurrent production load.
+
+## Serving the mobile app
+
+To let the Flutter app on a USB-connected phone reach this API, start the server on all interfaces and forward the port:
+
+```powershell
+python -m uvicorn main:app --host 0.0.0.0 --port 8000
+adb reverse tcp:8000 tcp:8000
+```
+
+Check it with `http://localhost:8000/health` (returns `{"status":"ok"}`).
